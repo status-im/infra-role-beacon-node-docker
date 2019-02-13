@@ -1,0 +1,31 @@
+---
+- name: Enable Nimbus TCP ports
+  iptables:
+    comment: '{{ item.comment }}'
+    action: insert
+    chain: DOCKER-USER
+    jump: ACCEPT
+    source: '0.0.0.0/0'
+    protocol: 'tcp'
+    destination_port: '{{ item.port }}'
+  with_items:
+    - { 'port': '{{ beacon_node_cont_listening_port }}',
+        'comment': 'Nimbus beacon node listening port' }
+  notify:
+    - Save iptables rules
+
+- name: Enable Nimbus TCP ports
+  iptables:
+    comment: '{{ item.comment }}'
+    action: insert
+    chain: DOCKER-USER
+    jump: ACCEPT
+    source: '0.0.0.0/0'
+    protocol: 'udp'
+    destination_port: '{{ item.port }}'
+  with_items:
+    - { 'port': '{{ beacon_node_cont_disovery_port }}',
+        'comment': 'Nimbus beacon node discovery port' }
+  notify:
+    - Save iptables rules
+

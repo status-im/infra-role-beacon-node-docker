@@ -1,0 +1,42 @@
+---
+- name: Nginx config
+  template:
+    src: 'beacon_node_testnet.conf.j2'
+    dest: '/etc/nginx/sites-available/beacon_node_testnet.conf'
+  notify: reload nginx
+
+- name: Symlink the nginx config
+  file:
+    src: '/etc/nginx/sites-available/beacon_node_testnet.conf'
+    dest: '/etc/nginx/sites-enabled/beacon_node_testnet.conf'
+    state: link
+    force: true
+  notify: reload nginx
+
+- name: Create the testnet files directory
+  file:
+    path: '{{ nimbus_testnet_root }}'
+    state: directory
+    owner: www-data
+    group: www-data
+
+- name: Clone the testnet data
+  git:
+    repo: 'https://github.com/status-im/nim-eth2-testnet-data'
+    version: 'master'
+    depth: 1
+    update: true
+    dest: '/opt/nim-eth-testnet-data'
+  register: repo
+
+- name: Copy livepeer player files
+  shell: 'cp -r /opt/nim-eth-testnet-data/www/* {{ nimbus_testnet_root }}'
+  when: repo.changed
+
+- name: Fix the permissions just in case
+  file:
+    dest: '{{ nimbus_testnet_root }}'
+    owner: 'www-data'
+    group: 'www-data'
+    recurse: true
+
