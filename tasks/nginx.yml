@@ -29,7 +29,7 @@
     dest: '/opt/nim-eth-testnet-data'
   register: repo
 
-- name: Copy livepeer player files
+- name: Copy the public tesnet files
   shell: 'cp -r /opt/nim-eth-testnet-data/www/* {{ nimbus_testnet_root }}'
   when: repo.changed
 

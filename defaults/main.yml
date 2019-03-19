@@ -1,15 +1,16 @@
 ---
 nimbus_verbose: false
 
-nimbus_testnet_root: '/var/www/nimbus_testnet'
-nimbus_testnet_domain: 'node-01.do-ams3.nimbus.misc.statusim.net'
+nimbus_testnet_root: '/var/www/serenity-testnets'
+nimbus_testnet_domain: 'serenity-testnets.status.im'
 nimbus_testnet_ssl_crt_path: '/certs/origin.crt'
 nimbus_testnet_ssl_key_path: '/certs/origin.key'
 
 # https://github.com/status-im/nimbus/docker
 beacon_node_cont_image: 'statusteam/nimbus_beacon_node:ubuntu'
+
 beacon_node_cont_name: 'nimbus_beacon_node'
 beacon_node_cont_vol: '/docker/{{ beacon_node_cont_name }}'
-beacon_node_cont_disovery_port: 40404
-beacon_node_cont_listening_port: 40404
+beacon_node_cont_disovery_port: 9630
+beacon_node_cont_listening_port: 9630
 

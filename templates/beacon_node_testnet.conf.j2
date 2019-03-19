@@ -8,11 +8,14 @@ server {
 
 server {
     listen 443 ssl;
-    
+
     server_name {{ nimbus_testnet_domain }};
 
     ssl_certificate     {{ nimbus_testnet_ssl_crt_path }};
     ssl_certificate_key {{ nimbus_testnet_ssl_key_path }};
 
-    root {{ nimbus_testnet_root }};
+    location / {
+      root {{ nimbus_testnet_root }};
+      autoindex on;
+    }
 }
