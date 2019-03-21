@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Zahary Karadjov <zahary@status.im>
-  description: Deploy and setup a Nimbus bootstrap node for an ETH2 testnet
+  description: Deploy and setup nodes in a Nimbus serenity testnet
   company: Status.im
   license: MIT
   min_ansible_version: 1.9

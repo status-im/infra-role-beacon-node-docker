@@ -4,19 +4,15 @@ This role provisions a [Nimbus](https://nimbus.status.im/) installation that can
 
 # Introduction
 
-Nimbus is installed as a [docker container](https://github.com/status-im/nimbus/docker) and exposes the following ports:
-
-* UDP 40404 - Used for peer discovery
-* TCP 40404 - Used for persistent peer connections
-
-At the moment, this role also setups a nginx site hosting the Nimbus testnet validator database (a simple json file).
+Each host can run multiple nodes installed as [docker containers](https://github.com/status-im/nimbus/docker).
+TCP and UDP ports starting from 9000 will be exposed (e.g. 9000, 9001 and 9002 if you run 3 nodes).
 
 # Installation
 
 Add to your `requirements.yml` file:
 ```yaml
-- name: nimbus
-  src: https://github.com/status-im/infra-role-nimbus.git
+- name: beacon_node
+  src: https://github.com/status-im/infra-role-beacon-node.git
 ```
 
 # Requirements
@@ -24,5 +20,4 @@ Add to your `requirements.yml` file:
 Due to being part of Status infra this role assumes availability of certain things:
 
 * Docker for running containers
-* Nginx full installation
 * The `iptables-persistent` module
