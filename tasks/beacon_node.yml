@@ -17,7 +17,7 @@
       {% if beacon_node_verbose %}
       --logLevel=DEBUG
       {% endif %}
-      --network={{beacon_node_network_name}}
+      --network={{beacon_node_network}}
       --tcpPort={{beacon_node_listening_port}}
       --udpPort={{beacon_node_disovery_port}}
     volumes:
