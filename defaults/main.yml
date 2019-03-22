@@ -3,7 +3,8 @@ beacon_node_verbose: false
 
 # https://github.com/status-im/nimbus/docker
 beacon_node_build_flavour: 'rlpx'
-beacon_node_cont_image: 'statusteam/beacon_node_{{beacon_node_build_flavour}}:ubuntu'
+beacon_node_network: 'testnet0'
+beacon_node_cont_image: 'statusteam/beacon_node_{{beacon_node_network}}_{{beacon_node_build_flavour}}:ubuntu'
 beacon_node_total_nodes: 1
 
 beacon_node_cont_vol: '/docker/beacon_node'
