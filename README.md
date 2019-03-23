@@ -11,8 +11,9 @@ TCP and UDP ports starting from 9000 will be exposed (e.g. 9000, 9001 and 9002 i
 
 Add to your `requirements.yml` file:
 ```yaml
-- name: beacon_node
-  src: https://github.com/status-im/infra-role-beacon-node.git
+- name: infra-role-beacon-node
+  src: git+git@github.com:status-im/infra-role-beacon-node.git
+  scm: git
 ```
 
 # Configuration
