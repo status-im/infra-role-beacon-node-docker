@@ -30,16 +30,18 @@
 
 - name: 'Enable ports for: {{ container_name }}'
   iptables:
-    comment: '{{ container_name }} {{ item.protocol }}'
+    comment: '{{ container_name }} {{ rule.protocol }}'
     action: insert
     chain: DOCKER-USER
     jump: ACCEPT
     source: '0.0.0.0/0'
-    protocol: '{{ item.protocol }}'
-    destination_port: '{{ item.por }}'
+    protocol: '{{ rule.protocol }}'
+    destination_port: '{{ rule.port }}'
   with_items:
     - { protocol: 'tcp', port: '{{ public_tcp_port }}' }
     - { protocol: 'udp', port: '{{ public_udp_port }}' }
+  loop_control:
+    loop_var: rule
   notify:
     - Save iptables rules
 
