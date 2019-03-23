@@ -9,4 +9,7 @@ galaxy_info:
   - name: Ubuntu
     versions:
     - xenial
-dependencies: []
+  dependencies:
+    - name: consul-service
+      src: git+git@github.com:status-im/infra-role-consul-service.git
+      scm: git
