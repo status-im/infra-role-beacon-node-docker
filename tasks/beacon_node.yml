@@ -1,49 +1,58 @@
 ---
-- name: 'Create {{container_name}} container'
+- name: 'Create container dir: {{ container_name }}'
+  file:
+    path: '/docker/{{ container_name }}/data'
+    state: directory
+    owner: dockremap
+    group: docker
+
+- name: 'Create container: {{ container_name }} {{ public_tcp_port }}'
   docker_container:
-    name: '{{container_name}}'
-    image: '{{beacon_node_cont_image}}'
+    name: '{{ container_name }}'
+    image: '{{ beacon_node_cont_image }}'
     pull: true
     restart_policy: always
     state: 'started'
     recreate: false
     restart: false
     ports:
-      - '127.0.0.1:{{public_tcp_port}}:{{beacon_node_listening_port}}'
-      - '127.0.0.1:{{public_udp_port}}:{{beacon_node_disovery_port}}/udp'
-      - '{{public_tcp_port}}:{{beacon_node_listening_port}}'
-      - '{{public_udp_port}}:{{beacon_node_disovery_port}}/udp'
+      - '{{ public_tcp_port }}:{{ beacon_node_listening_port }}'
+      - '{{ public_udp_port }}:{{ beacon_node_disovery_port }}/udp'
     command: |
       {% if beacon_node_verbose %}
       --logLevel=DEBUG
       {% endif %}
-      --network={{beacon_node_network}}
-      --tcpPort={{beacon_node_listening_port}}
-      --udpPort={{beacon_node_disovery_port}}
+      --network={{ beacon_node_network }}
+      --tcpPort={{ beacon_node_listening_port }}
+      --udpPort={{ beacon_node_disovery_port }}
     volumes:
-      - '{{beacon_node_cont_vol}}/node-{{index}}:/root/.cache/nimbus'
+      - '/docker/{{ container_name }}/data:/root/.cache/nimbus'
 
-- name: 'Enable TCP port for beacon node {{index}}'
+- name: 'Enable ports for: {{ container_name }}'
   iptables:
-    comment: 'TCP port for beacon node {{index}}'
+    comment: '{{ container_name }} {{ item.protocol }}'
     action: insert
     chain: DOCKER-USER
     jump: ACCEPT
     source: '0.0.0.0/0'
-    protocol: 'tcp'
-    destination_port: '{{public_tcp_port}}'
+    protocol: '{{ item.protocol }}'
+    destination_port: '{{ item.por }}'
+  with_items:
+    - { protocol: 'tcp', port: '{{ public_tcp_port }}' }
+    - { protocol: 'udp', port: '{{ public_udp_port }}' }
   notify:
     - Save iptables rules
 
-- name: 'Enable UDP port for beacon node {{index}}'
-  iptables:
-    comment: 'UDP port for beacon node {{index}}'
-    action: insert
-    chain: DOCKER-USER
-    jump: ACCEPT
-    source: '0.0.0.0/0'
-    protocol: 'udp'
-    destination_port: '{{public_udp_port}}'
-  notify:
-    - Save iptables rules
-
+- name: 'Consul service definition - {{ container_name }}'
+  include_role: name=consul-service
+  vars:
+    consul_config_name: '{{ container_name | replace("-", "_") }}'
+    consul_services:
+      - id: '{{ container_name }}-{{ index }}'
+        name: '{{ container_name }}'
+        port: '{{ public_tcp_port }}'
+        tags: ['{{ env }}.{{ stage }}', 'beacon', 'nimbus']
+        checks:
+          - id: beacon-node-health
+            type: tcp
+            tcp: 'localhost:{{ public_tcp_port }}'

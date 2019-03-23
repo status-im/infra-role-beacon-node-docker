@@ -1,11 +1,13 @@
 ---
 beacon_node_verbose: false
 
-# https://github.com/status-im/nimbus/docker
 beacon_node_build_flavour: 'rlpx'
 beacon_node_network: 'testnet0'
-beacon_node_cont_image: 'statusteam/nimbus_beacon_node:{{beacon_node_network}}-{{beacon_node_build_flavour}}'
 beacon_node_total_nodes: 1
+
+# Image source: https://github.com/status-im/nimbus/tree/master/docker/beacon_node
+beacon_node_cont_tag: '{{ beacon_node_network }}-{{ beacon_node_build_flavour }}'
+beacon_node_cont_image: 'statusteam/nimbus_beacon_node:{{ beacon_node_cont_tag }}'
 
 beacon_node_cont_vol: '/docker/beacon_node'
 
