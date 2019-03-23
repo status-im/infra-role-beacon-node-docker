@@ -15,6 +15,17 @@ Add to your `requirements.yml` file:
   src: https://github.com/status-im/infra-role-beacon-node.git
 ```
 
+# Configuration
+
+The crucial settings are:
+```yaml
+beacon_node_build_flavour: 'rlpx'
+beacon_node_network: 'testnet0'
+beacon_node_total_nodes: 1
+# optional setting for debug mode
+beacon_node_verbose: false
+```
+
 # Requirements
 
 Due to being part of Status infra this role assumes availability of certain things:
