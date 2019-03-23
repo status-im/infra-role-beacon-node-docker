@@ -12,9 +12,9 @@
     image: '{{ beacon_node_cont_image }}'
     pull: true
     restart_policy: always
-    state: 'started'
-    recreate: false
-    restart: false
+    state: '{{ cont_state }}'
+    recreate: '{{ cont_recreate }}'
+    restart: '{{ cont_restart }}'
     ports:
       - '{{ public_tcp_port }}:{{ beacon_node_listening_port }}'
       - '{{ public_udp_port }}:{{ beacon_node_disovery_port }}/udp'
