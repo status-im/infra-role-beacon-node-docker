@@ -6,7 +6,7 @@
     owner: dockremap
     group: docker
 
-- name: 'Create container: {{ container_name }} {{ public_tcp_port }}'
+- name: 'Create container: {{ container_name }}'
   docker_container:
     name: '{{ container_name }}'
     image: '{{ beacon_node_cont_image }}'
@@ -15,6 +15,9 @@
     state: '{{ cont_state }}'
     recreate: '{{ cont_recreate }}'
     restart: '{{ cont_restart }}'
+    # enable image updates via watchtower
+    labels:
+      com.centurylinklabs.watchtower.enable: 'true'
     ports:
       - '{{ public_tcp_port }}:{{ beacon_node_listening_port }}'
       - '{{ public_udp_port }}:{{ beacon_node_disovery_port }}/udp'
