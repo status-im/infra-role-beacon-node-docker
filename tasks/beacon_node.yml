@@ -53,7 +53,7 @@
   vars:
     consul_config_name: '{{ container_name | replace("-", "_") }}'
     consul_services:
-      - id: '{{ container_name }}-{{ index }}'
+      - id: '{{ container_name }}-{{ loop_index }}'
         name: 'beacon-node'
         port: '{{ public_tcp_port }}'
         tags: ['{{ env }}.{{ stage }}', 'beacon', 'nimbus']
