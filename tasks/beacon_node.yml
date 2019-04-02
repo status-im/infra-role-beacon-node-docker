@@ -54,7 +54,7 @@
     consul_config_name: '{{ container_name | replace("-", "_") }}'
     consul_services:
       - id: '{{ container_name }}-{{ index }}'
-        name: '{{ container_name }}'
+        name: 'beacon-node'
         port: '{{ public_tcp_port }}'
         tags: ['{{ env }}.{{ stage }}', 'beacon', 'nimbus']
         checks:
