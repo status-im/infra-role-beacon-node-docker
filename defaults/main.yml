@@ -1,6 +1,4 @@
 ---
-beacon_node_verbose: false
-
 beacon_node_build_flavour: 'rlpx'
 beacon_node_network: 'testnet0'
 beacon_node_total_nodes: 1

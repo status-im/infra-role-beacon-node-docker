@@ -22,9 +22,7 @@
       - '{{ public_tcp_port }}:{{ beacon_node_listening_port }}'
       - '{{ public_udp_port }}:{{ beacon_node_discovery_port }}/udp'
     command: |
-      {% if beacon_node_verbose %}
       --logLevel={{ beacon_node_log_level }}
-      {% endif %}
       --network={{ beacon_node_network }}
       --tcpPort={{ beacon_node_listening_port }}
       --udpPort={{ beacon_node_discovery_port }}
