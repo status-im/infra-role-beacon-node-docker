@@ -12,7 +12,7 @@
     image: '{{ beacon_node_cont_image }}'
     pull: true
     restart_policy: always
-    state: '{{ cont_state }}'
+    state: '{{ "started" if is_running else "stopped" }}'
     recreate: '{{ cont_recreate }}'
     restart: '{{ cont_restart }}'
     # enable image updates via watchtower

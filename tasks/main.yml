@@ -5,6 +5,7 @@
     public_udp_port: '{{ beacon_node_discovery_port + loop_index }}'
     container_name: 'beacon-node-{{ beacon_node_build_flavour }}-{{ beacon_node_network}}-{{loop_index }}'
     index: '{{ loop_index }}'
+    is_running: '{{ loop_index < beacon_node_running_nodes }}'
   loop: '{{ range(0, beacon_node_total_nodes) | list }}'
   loop_control:
     index_var: loop_index

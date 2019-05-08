@@ -2,6 +2,7 @@
 beacon_node_build_flavour: 'rlpx'
 beacon_node_network: 'testnet0'
 beacon_node_total_nodes: 1
+beacon_node_running_nodes: 1
 beacon_node_log_level: INFO
 
 # Image source: https://github.com/status-im/nimbus/tree/master/docker/beacon_node
@@ -12,6 +13,5 @@ beacon_node_discovery_port: 9000
 beacon_node_listening_port: 9000
 
 # general container management
-cont_state: started
 cont_recreate: false
 cont_restart: false
