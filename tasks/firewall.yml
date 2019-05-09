@@ -1,0 +1,17 @@
+---
+- name: 'Enable ports for: {{ beacon_node_cont_name }}'
+  iptables:
+    comment: '{{ beacon_node_cont_name }} {{ rule.protocol }}'
+    action: insert
+    chain: DOCKER-USER
+    jump: ACCEPT
+    source: '0.0.0.0/0'
+    protocol: '{{ rule.protocol }}'
+    destination_port: '{{ rule.port }}'
+  with_items:
+    - { protocol: 'tcp', port: '{{ beacon_node_public_tcp_port }}' }
+    - { protocol: 'udp', port: '{{ beacon_node_public_udp_port }}' }
+  loop_control:
+    loop_var: rule
+  notify:
+    - Save iptables rules

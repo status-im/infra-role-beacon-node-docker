@@ -1,0 +1,15 @@
+---
+- name: 'Consul service definition - {{ beacon_node_cont_name }}'
+  include_role: name=consul-service
+  vars:
+    consul_config_name: '{{ beacon_node_cont_name | replace("-", "_") }}'
+    consul_services:
+      - id: '{{ beacon_node_cont_name }}'
+        name: 'beacon-node'
+        port: '{{ beacon_node_public_tcp_port }}'
+        address: '{{ beacon_node_public_address }}'
+        tags: ['{{ env }}.{{ stage }}', 'beacon', 'nimbus']
+        checks:
+          - id: beacon-node-health
+            type: tcp
+            tcp: 'localhost:{{ beacon_node_public_tcp_port }}'

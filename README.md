@@ -22,9 +22,8 @@ The crucial settings are:
 ```yaml
 beacon_node_build_flavour: 'rlpx'
 beacon_node_network: 'testnet0'
-beacon_node_total_nodes: 1
 # optional setting for debug mode
-beacon_node_verbose: false
+beacon_node_log_level: DEBUG
 ```
 
 # Requirements
