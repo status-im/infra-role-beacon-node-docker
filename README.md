@@ -20,7 +20,6 @@ Add to your `requirements.yml` file:
 
 The crucial settings are:
 ```yaml
-beacon_node_build_flavour: 'rlpx'
 beacon_node_network: 'testnet0'
 # optional setting for debug mode
 beacon_node_log_level: DEBUG
