@@ -13,3 +13,13 @@
           - id: beacon-node-health
             type: tcp
             tcp: 'localhost:{{ beacon_node_public_tcp_port }}'
+
+      - id: '{{ beacon_node_cont_name }}-metrics'
+        name: 'beacon-node-metrics'
+        port: '{{ beacon_node_metrics_port }}'
+        address: '{{ ansible_local.tinc.vpn_ip }}'
+        tags: ['{{ env }}.{{ stage }}', 'beacon', 'nimbus', 'metrics']
+        checks:
+          - id: beacon-node-metrics
+            type: http
+            http: 'http://localhost:{{ beacon_node_metrics_port }}/metrics'
