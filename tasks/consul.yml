@@ -19,6 +19,8 @@
         port: '{{ beacon_node_metrics_port }}'
         address: '{{ ansible_local.tinc.vpn_ip }}'
         tags: ['{{ env }}.{{ stage }}', 'beacon', 'nimbus', 'metrics']
+        meta:
+          container: '{{ beacon_node_cont_name }}'
         checks:
           - id: beacon-node-metrics
             type: http
