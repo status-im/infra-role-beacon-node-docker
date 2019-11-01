@@ -6,13 +6,13 @@
     consul_services:
       - id: '{{ beacon_node_cont_name }}'
         name: 'beacon-node'
-        port: '{{ beacon_node_public_tcp_port }}'
+        port: '{{ beacon_node_listening_port }}'
         address: '{{ beacon_node_public_address }}'
         tags: ['{{ env }}.{{ stage }}', 'beacon', 'nimbus']
         checks:
           - id: beacon-node-health
             type: tcp
-            tcp: 'localhost:{{ beacon_node_public_tcp_port }}'
+            tcp: 'localhost:{{ beacon_node_listening_port }}'
 
       - id: '{{ beacon_node_cont_name }}-metrics'
         name: 'beacon-node-metrics'

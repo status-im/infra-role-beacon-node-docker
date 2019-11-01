@@ -20,8 +20,8 @@
       com.centurylinklabs.watchtower.enable: 'true'
     ports:
       - '{{ beacon_node_metrics_port }}:{{ beacon_node_metrics_port }}/tcp'
-      - '{{ beacon_node_public_tcp_port }}:{{ beacon_node_listening_port }}/tcp'
-      - '{{ beacon_node_public_udp_port }}:{{ beacon_node_discovery_port }}/udp'
+      - '{{ beacon_node_listening_port }}:{{ beacon_node_listening_port }}/tcp'
+      - '{{ beacon_node_discovery_port }}:{{ beacon_node_discovery_port }}/udp'
     command: |
       --log-level={{ beacon_node_log_level }}
       --tcp-port={{ beacon_node_listening_port }}

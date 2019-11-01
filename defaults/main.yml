@@ -9,9 +9,7 @@ beacon_node_cont_name: 'beacon-node-{{ beacon_node_network}}'
 
 beacon_node_discovery_port: 9000
 beacon_node_listening_port: 9000
-beacon_node_public_tcp_port: 9000
-beacon_node_public_udp_port: 9000
-beacon_node_public_address: '{{ ansible_hostname }}'
+beacon_node_public_address: '{{ ansible_host }}'
 
 beacon_node_cont_vol: '/docker/{{ beacon_node_cont_name }}'
 
