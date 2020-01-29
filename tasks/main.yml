@@ -2,4 +2,3 @@
 - import_tasks: container.yml
 - import_tasks: firewall.yml
 - import_tasks: consul.yml
-  when: bootstrap__consul_enabled
