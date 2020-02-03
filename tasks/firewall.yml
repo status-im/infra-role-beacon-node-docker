@@ -9,6 +9,7 @@
     protocol: '{{ rule.protocol }}'
     destination_port: '{{ rule.port }}'
   with_items:
+    - { protocol: 'tcp', port: '{{ beacon_node_metrics_port }}' }
     - { protocol: 'tcp', port: '{{ beacon_node_listening_port }}' }
     - { protocol: 'udp', port: '{{ beacon_node_discovery_port }}' }
   loop_control:
