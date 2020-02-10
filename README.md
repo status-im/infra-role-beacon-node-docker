@@ -25,6 +25,14 @@ beacon_node_network: 'testnet0'
 beacon_node_log_level: DEBUG
 ```
 
+# Usage
+
+You can re-create containers on the host using:
+```
+cd /docker/beacon-node-testnet0-1 && docker-compose up -d --force-recreate
+```
+Which will use the `docker-compose.yml` file in that directory.
+
 # Requirements
 
 Due to being part of Status infra this role assumes availability of certain things:

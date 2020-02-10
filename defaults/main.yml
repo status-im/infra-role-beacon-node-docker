@@ -6,18 +6,17 @@ beacon_node_log_level: INFO
 beacon_node_cont_tag: '{{ beacon_node_network }}'
 beacon_node_cont_image: 'statusteam/nimbus_beacon_node:{{ beacon_node_cont_tag }}'
 beacon_node_cont_name: 'beacon-node-{{ beacon_node_network}}'
+beacon_node_cont_vol: '/docker/{{ beacon_node_cont_name }}'
 
+# connectivity settings
 beacon_node_discovery_port: 9000
 beacon_node_listening_port: 9000
 beacon_node_public_address: '{{ ansible_host }}'
 
-beacon_node_cont_vol: '/docker/{{ beacon_node_cont_name }}'
-
 # metrics
-beacon_node_metrics_enabled: true
 beacon_node_metrics_port: 9200
 
 # general container management
-cont_recreate: false
-cont_restart: false
-cont_state: 'started'
+cont_state: 'present'
+cont_recreate: 'smart'
+cont_restart: 'always'
