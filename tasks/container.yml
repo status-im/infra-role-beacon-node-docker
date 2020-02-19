@@ -41,8 +41,8 @@
 - name: 'Create container: {{ beacon_node_cont_name }}'
   docker_compose:
     project_src: '{{ beacon_node_cont_vol }}'
-    state: '{{ cont_state }}'
-    recreate: '{{ cont_recreate }}'
-    restarted: '{{ cont_restart }}'
+    state: '{{ compose_state }}'
+    recreate: '{{ compose_recreate }}'
+    restarted: '{{ compose_restart }}'
     pull: true
     build: no
