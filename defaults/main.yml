@@ -16,8 +16,8 @@ beacon_node_public_address: '{{ ansible_host }}'
 # metrics
 beacon_node_metrics_port: 9200
 
-# rpc
-beacon_node_rpc_port: 9300
+# rpc / administrative
+beacon_node_rpc_port: 9900
 
 # general container management
 compose_state: 'present'

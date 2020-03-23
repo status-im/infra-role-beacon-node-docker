@@ -16,6 +16,7 @@
           image: '{{ beacon_node_cont_image }}'
           restart: 'always'
           ports:
+            - '127.0.0.1:{{ beacon_node_rpc_port }}:{{ beacon_node_rpc_port }}/tcp'
             - '{{ beacon_node_metrics_port }}:{{ beacon_node_metrics_port }}/tcp'
             - '{{ beacon_node_listening_port }}:{{ beacon_node_listening_port }}/tcp'
             - '{{ beacon_node_discovery_port }}:{{ beacon_node_discovery_port }}/udp'
