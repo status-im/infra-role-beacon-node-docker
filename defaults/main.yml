@@ -16,6 +16,9 @@ beacon_node_public_address: '{{ ansible_host }}'
 # metrics
 beacon_node_metrics_port: 9200
 
+# rpc
+beacon_node_rpc_port: 9300
+
 # general container management
 compose_state: 'present'
 compose_recreate: 'smart'
