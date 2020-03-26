@@ -15,6 +15,14 @@
           container_name: '{{ beacon_node_cont_name }}'
           image: '{{ beacon_node_cont_image }}'
           restart: 'always'
+          deploy:
+            resources:
+              limits:
+                cpus: '{{ beacon_node_cpu_limit | string }}'
+                memory: '{{ beacon_node_mem_limit }}M'
+              reservations:
+                cpus: '{{ beacon_node_cpu_reserve | string }}'
+                memory: '{{ beacon_node_mem_reserve }}M'
           ports:
             - '127.0.0.1:{{ beacon_node_rpc_port }}:{{ beacon_node_rpc_port }}/tcp'
             - '{{ beacon_node_metrics_port }}:{{ beacon_node_metrics_port }}/tcp'
