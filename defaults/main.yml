@@ -32,6 +32,6 @@ beacon_node_restart_delay_sec: 10
 beacon_node_restart_window_sec: 120
 
 # general container management
-compose_state: 'present'
-compose_recreate: 'smart'
-compose_restart: 'always'
+compose_recreate: false
+compose_restart: false
+compose_destroy: false

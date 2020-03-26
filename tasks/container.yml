@@ -1,52 +1,4 @@
 ---
-- name: 'Create container dir: {{ beacon_node_cont_name }}'
-  file:
-    path: '{{ beacon_node_cont_vol }}/data'
-    state: directory
-    owner: dockremap
-    group: docker
-
-- name: 'Create container config: {{ beacon_node_cont_name }}'
-  set_fact:
-    beacon_node_compose:
-      version: '3.7'
-      services:
-        beacon_node:
-          container_name: '{{ beacon_node_cont_name }}'
-          image: '{{ beacon_node_cont_image }}'
-          restart: 'always'
-          deploy:
-            resources:
-              limits:
-                cpus: '{{ beacon_node_cpu_limit | string }}'
-                memory: '{{ beacon_node_mem_limit }}M'
-              reservations:
-                cpus: '{{ beacon_node_cpu_reserve | string }}'
-                memory: '{{ beacon_node_mem_reserve }}M'
-            restart_policy:
-              condition: '{{ beacon_node_restart_ondition }}'
-              max_attempts: '{{ beacon_node_restart_max_attempts }}'
-              delay: '{{ beacon_node_restart_delay_sec }}s'
-              window: '{{ beacon_node_restart_window_sec }}s'
-          ports:
-            - '127.0.0.1:{{ beacon_node_rpc_port }}:{{ beacon_node_rpc_port }}/tcp'
-            - '{{ beacon_node_metrics_port }}:{{ beacon_node_metrics_port }}/tcp'
-            - '{{ beacon_node_listening_port }}:{{ beacon_node_listening_port }}/tcp'
-            - '{{ beacon_node_discovery_port }}:{{ beacon_node_discovery_port }}/udp'
-          command:
-            - '--nat=extip:{{ beacon_node_public_address }}'
-            - '--log-level={{ beacon_node_log_level }}'
-            - '--tcp-port={{ beacon_node_listening_port }}'
-            - '--udp-port={{ beacon_node_discovery_port }}'
-            - '--rpc'
-            - '--rpc-address=0.0.0.0'
-            - '--rpc-port={{ beacon_node_rpc_port }}'
-            - '--metrics'
-            - '--metrics-address=0.0.0.0'
-            - '--metrics-port={{ beacon_node_metrics_port }}'
-          volumes:
-            - '{{ beacon_node_cont_vol }}/data:/root/.cache/nimbus'
-
 - name: 'Create compose file: {{ beacon_node_cont_name }}'
   copy:
     dest: '{{ beacon_node_cont_vol }}/docker-compose.yml'
@@ -55,11 +7,31 @@
     group: docker
     mode: 0644
 
+# --compatibility flag required for mem/cpu limits
 - name: 'Create container: {{ beacon_node_cont_name }}'
-  docker_compose:
-    project_src: '{{ beacon_node_cont_vol }}'
-    state: '{{ compose_state }}'
-    recreate: '{{ compose_recreate }}'
-    restarted: '{{ compose_restart }}'
-    pull: true
-    build: no
+  command: |
+    docker-compose \
+      --compatibility \
+      up \
+      --quiet-pull \
+      --no-build \
+      --detach \
+      {% if compose_recreate %}
+      --force-recreate \
+      {% endif %}
+      --no-color
+  args:
+    chdir: '{{ beacon_node_cont_vol }}'
+  when: compose_state == "present"
+
+- name: 'Restart container: {{ beacon_node_cont_name }}'
+  command: docker-compose --compatibility down
+  args:
+    chdir: '{{ beacon_node_cont_vol }}'
+  when: compose_restart
+
+- name: 'Destroy container: {{ beacon_node_cont_name }}'
+  command: docker-compose --compatibility down
+  args:
+    chdir: '{{ beacon_node_cont_vol }}'
+  when: compose_destroy
