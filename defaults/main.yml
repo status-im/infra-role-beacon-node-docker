@@ -25,6 +25,12 @@ beacon_node_mem_limit: '{{ (ansible_memtotal_mb * 0.6) | int }}'
 beacon_node_cpu_reserve: 0.20
 beacon_node_mem_reserve: '{{ (ansible_memtotal_mb * 0.2) | int }}'
 
+# container restart policy
+beacon_node_restart_ondition: 'on-failure'
+beacon_node_restart_max_attempts: 3
+beacon_node_restart_delay_sec: 10
+beacon_node_restart_window_sec: 120
+
 # general container management
 compose_state: 'present'
 compose_recreate: 'smart'

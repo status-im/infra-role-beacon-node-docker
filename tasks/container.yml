@@ -23,6 +23,11 @@
               reservations:
                 cpus: '{{ beacon_node_cpu_reserve | string }}'
                 memory: '{{ beacon_node_mem_reserve }}M'
+            restart_policy:
+              condition: '{{ beacon_node_restart_ondition }}'
+              max_attempts: '{{ beacon_node_restart_max_attempts }}'
+              delay: '{{ beacon_node_restart_delay_sec }}s'
+              window: '{{ beacon_node_restart_window_sec }}s'
           ports:
             - '127.0.0.1:{{ beacon_node_rpc_port }}:{{ beacon_node_rpc_port }}/tcp'
             - '{{ beacon_node_metrics_port }}:{{ beacon_node_metrics_port }}/tcp'
