@@ -20,10 +20,10 @@ beacon_node_metrics_port: 9200
 beacon_node_rpc_port: 9900
 
 # resource limits, mem in MB
-beacon_node_cpu_limit: 0.60
+beacon_node_cpu_limit: 0.80
 beacon_node_mem_limit: '{{ (ansible_memtotal_mb * 0.6) | int }}'
-beacon_node_cpu_reserve: 0.20
-beacon_node_mem_reserve: '{{ (ansible_memtotal_mb * 0.2) | int }}'
+beacon_node_cpu_reserve: 0.40
+beacon_node_mem_reserve: '{{ (ansible_memtotal_mb * 0.4) | int }}'
 
 # container restart policy
 beacon_node_restart_ondition: 'on-failure'
