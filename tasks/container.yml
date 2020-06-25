@@ -19,19 +19,8 @@
       {% if compose_recreate %}
       --force-recreate \
       {% endif %}
-      --no-color
+      --no-color \
+      --no-start
   args:
     chdir: '{{ beacon_node_cont_vol }}'
-  when: compose_state == "present"
 
-- name: 'Restart container: {{ beacon_node_cont_name }}'
-  command: docker-compose --compatibility down
-  args:
-    chdir: '{{ beacon_node_cont_vol }}'
-  when: compose_restart
-
-- name: 'Destroy container: {{ beacon_node_cont_name }}'
-  command: docker-compose --compatibility down
-  args:
-    chdir: '{{ beacon_node_cont_vol }}'
-  when: compose_destroy

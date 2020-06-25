@@ -33,5 +33,3 @@ beacon_node_restart_window_sec: 120
 
 # general container management
 compose_recreate: false
-compose_restart: false
-compose_destroy: false
