@@ -15,7 +15,6 @@
       up \
       --quiet-pull \
       --no-build \
-      --detach \
       {% if compose_recreate %}
       --force-recreate \
       {% endif %}
