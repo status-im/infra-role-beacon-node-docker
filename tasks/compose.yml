@@ -18,10 +18,8 @@
           deploy:
             resources:
               limits:
-                cpus: '{{ beacon_node_cpu_limit | string }}'
                 memory: '{{ beacon_node_mem_limit }}M'
               reservations:
-                cpus: '{{ beacon_node_cpu_reserve | string }}'
                 memory: '{{ beacon_node_mem_reserve }}M'
             restart_policy:
               condition: '{{ beacon_node_restart_ondition }}'
