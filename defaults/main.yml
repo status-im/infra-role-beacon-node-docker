@@ -31,3 +31,7 @@ beacon_node_restart_window_sec: 120
 
 # general container management
 compose_recreate: false
+
+# shared testnet cron job
+beacon_node_shared_testnet_cron: false
+
