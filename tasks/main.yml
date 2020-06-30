@@ -2,5 +2,6 @@
 - import_tasks: install.yml
 - import_tasks: compose.yml
 - import_tasks: container.yml
+- import_tasks: cron.yml
 - import_tasks: firewall.yml
 - import_tasks: consul.yml
