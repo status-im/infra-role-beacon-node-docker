@@ -9,17 +9,18 @@
 
 # --compatibility flag required for mem/cpu limits
 - name: 'Create container: {{ beacon_node_cont_name }}'
-  command: |
-    docker-compose \
-      --compatibility \
-      up \
-      --quiet-pull \
-      --no-build \
+  command: >-
+    docker-compose
+      --compatibility
+      up
+      --quiet-pull
+      --no-build
       {% if compose_recreate %}
-      --force-recreate \
+      --force-recreate
       {% endif %}
-      --no-color \
-      --no-start
+      --no-color
+      -d
   args:
     chdir: '{{ beacon_node_cont_vol }}'
+  when: cont_restart
 
