@@ -29,3 +29,6 @@ compose_recreate: false
 # shared testnet cron job
 beacon_node_shared_testnet_cron: false
 
+# shared testnet name
+beacon_node_shared_testnet: 'medalla'
+
