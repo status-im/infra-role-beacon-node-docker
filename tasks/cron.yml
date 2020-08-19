@@ -6,6 +6,6 @@
     name: "shared testnet restart"
     minute: "0"
     hour: "0,6,12,18"
-    job: "PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'; cd {{ beacon_node_cont_vol }}; docker-compose --compatibility run --rm --name {{ beacon_node_cont_name }}-build-run beacon_node --build; docker-compose restart -t 60"
+    job: "PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'; cd {{ beacon_node_cont_vol }}; docker rm {{ beacon_node_cont_name }}-build-run; docker-compose --compatibility run --rm --name {{ beacon_node_cont_name }}-build-run beacon_node --build; docker-compose restart -t 60"
   when: beacon_node_shared_testnet_cron
 
