@@ -9,20 +9,14 @@
 - name: 'Create container config: {{ beacon_node_cont_name }}'
   set_fact:
     beacon_node_compose:
-      version: '3.7'
+      version: '2.4'
       services:
         beacon_node:
           container_name: '{{ beacon_node_cont_name }}'
           image: '{{ beacon_node_cont_image }}'
-          restart: 'always'
-          deploy:
-            resources:
-              limits:
-                memory: '{{ beacon_node_mem_limit }}M'
-              reservations:
-                memory: '{{ beacon_node_mem_reserve }}M'
-            restart_policy:
-              condition: 'any'
+          restart: 'unless-stopped'
+          mem_limit: '{{ beacon_node_mem_limit }}M'
+          mem_reservation: '{{ beacon_node_mem_reserve }}M'
           ports:
             - '127.0.0.1:{{ beacon_node_rpc_port }}:{{ beacon_node_rpc_port }}/tcp'
             - '{{ beacon_node_metrics_port }}:{{ beacon_node_metrics_port }}/tcp'
