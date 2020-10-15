@@ -5,6 +5,7 @@
     state: directory
     owner: dockremap
     group: docker
+    mode: 0750
 
 - name: 'Create container config: {{ beacon_node_cont_name }}'
   set_fact:
