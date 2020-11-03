@@ -11,7 +11,8 @@
     systemd_timer_requires_extra: 'docker.service'
     systemd_timer_work_dir: '{{ beacon_node_cont_vol }}'
     systemd_timer_start_on_creation: false
-    systemd_timer_script_content: >-
+    systemd_timer_script_content: |
+      #!/usr/bin/env bash
       # Clear our intermediate image
       docker image prune -f -a
       # Rebuild and replace the container image
