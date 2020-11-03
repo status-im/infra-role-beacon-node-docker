@@ -41,8 +41,13 @@ If you want to rebuild the image regularly you can enable it via:
 beacon_node_timer_rebuild: true
 beacon_node_timer_frequency: 'daily'
 ```
-Which should create a `` timer:
+Which should create a `beacon-node-${network}-rebuild` timer:
 ```
+ > sudo systemctl list-timers 'beacon-node-*'
+NEXT                        LEFT    LAST PASSED UNIT                               ACTIVATES                           
+Wed 2020-11-04 00:00:00 UTC 9h left n/a  n/a    beacon-node-testnet3-rebuild.timer beacon-node-testnet3-rebuild.service
+
+1 timers listed.
 ```
 Which will run `docker-compose up --build --force-recreate -d`.
 
