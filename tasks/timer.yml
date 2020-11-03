@@ -1,0 +1,18 @@
+---
+- name: Create timer for rebuilding image
+  when: beacon_node_timer_rebuild
+  include_role: name=systemd-timer
+  vars:
+    systemd_timer_name: '{{ beacon_node_cont_name }}-rebuild'
+    systemd_timer_user: 'root'
+    systemd_timer_description: 'Shared testnet: periodic container restart Cron job'
+    systemd_timer_frequency: '{{ beacon_node_timer_frequency }}'
+    systemd_timer_timeout_sec: '{{ beacon_node_timer_timeout }}'
+    systemd_timer_requires_extra: 'docker.service'
+    systemd_timer_work_dir: '{{ beacon_node_cont_vol }}'
+    systemd_timer_start_on_creation: false
+    systemd_timer_script_content: >-
+      # Clear our intermediate image
+      docker image prune -f -a
+      # Rebuild and replace the container image
+      docker-compose --compatibility up --quiet-pull --force-recreate --build -d

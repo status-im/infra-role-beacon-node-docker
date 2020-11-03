@@ -34,6 +34,18 @@ docker-compose --compatibility up -d --force-recreate
 ```
 Which will use the `docker-compose.yml` file in that directory.
 
+# Rebuilding
+
+If you want to rebuild the image regularly you can enable it via:
+```yaml
+beacon_node_timer_rebuild: true
+beacon_node_timer_frequency: 'daily'
+```
+Which should create a `` timer:
+```
+```
+Which will run `docker-compose up --build --force-recreate -d`.
+
 # Requirements
 
 Due to being part of Status infra this role assumes availability of certain things:

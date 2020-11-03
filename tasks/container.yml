@@ -7,14 +7,14 @@
     group: docker
     mode: 0644
 
-# --compatibility flag required for mem/cpu limits
+# This takes a while because it builds the image
+# NOTE: --compatibility flag required for mem/cpu limits
 - name: 'Create container: {{ beacon_node_cont_name }}'
   command: >-
     docker-compose
       --compatibility
       up
       --quiet-pull
-      --no-build
       {% if compose_recreate %}
       --force-recreate
       {% endif %}

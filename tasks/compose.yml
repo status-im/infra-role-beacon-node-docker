@@ -7,14 +7,40 @@
     group: docker
     mode: 0750
 
+- name: Generate the Dockerfile
+  template:
+    src: 'Dockerfile.j2'
+    dest: '{{ beacon_node_cont_vol }}/Dockerfile'
+    owner: dockremap
+    group: docker
+    mode: 0644
+
+- name: Create .dockerignore
+  copy:
+    dest: '{{ beacon_node_cont_vol }}/.dockerignore'
+    content: data/
+    owner: dockremap
+    group: docker
+    mode: 0644
+
+- name: Verify network name
+  assert:
+    that: '{{ beacon_node_network in ["testnet2", "testnet3"] }}'
+
 - name: 'Create container config: {{ beacon_node_cont_name }}'
   set_fact:
     beacon_node_compose:
       version: '2.4'
       services:
         beacon_node:
-          container_name: '{{ beacon_node_cont_name }}'
+          build:
+            context: ./
+            dockerfile: Dockerfile
+            args:
+              # This is here just to rebuild every time
+              DUMMY: '{{ ansible_date_time.epoch }}'
           image: '{{ beacon_node_cont_image }}'
+          container_name: '{{ beacon_node_cont_name }}'
           restart: 'unless-stopped'
           mem_limit: '{{ beacon_node_mem_limit }}M'
           mem_reservation: '{{ beacon_node_mem_reserve }}M'
@@ -24,11 +50,9 @@
             - '{{ beacon_node_listening_port }}:{{ beacon_node_listening_port }}/tcp'
             - '{{ beacon_node_discovery_port }}:{{ beacon_node_discovery_port }}/udp'
           command: >-
-            {% if beacon_node_network in ["testnet2", "testnet3"] %}
-            --network {{ beacon_node_shared_testnet }}
-            --run
-            --
-            {% endif %}
+            --network={{ beacon_node_shared_testnet }}
+            --data-dir='/data/shared_{{ beacon_node_shared_testnet }}_0'
+            --web3-url={{ beacon_node_web3_url }}
             --nat=extip:{{ beacon_node_public_address }}
             --log-level={{ beacon_node_log_level }}
             --tcp-port={{ beacon_node_listening_port }}
@@ -40,4 +64,4 @@
             --metrics-address=0.0.0.0
             --metrics-port={{ beacon_node_metrics_port }}
           volumes:
-            - '{{ beacon_node_cont_vol }}/data:/root/.cache/nimbus'
+            - '{{ beacon_node_cont_vol }}/data:/data'

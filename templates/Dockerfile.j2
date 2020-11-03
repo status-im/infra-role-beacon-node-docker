@@ -1,0 +1,31 @@
+FROM alpine:3.12.1 AS builder
+
+RUN apk add --no-cache bash git build-base pcre-dev linux-headers
+
+ARG DUMMY
+
+RUN cd /opt && git clone {{ beacon_node_repo_url }}
+
+WORKDIR /opt/nimbus-eth2
+
+RUN git config pull.rebase false \
+ && git checkout -- . \
+ && git checkout {{ beacon_node_repo_branch }} \
+ && git pull
+
+RUN make update \
+ && make \
+      LOG_LEVEL="TRACE" \
+      MAKEFLAGS="-j2" \
+      NIMFLAGS="-d:insecure -d:testnet_servers_image --parallelBuild:1" \
+      beacon_node signing_process
+
+FROM alpine:3.12.1
+
+RUN apk add --no-cache libgcc pcre
+
+COPY --from=builder /opt/nimbus-eth2/build/beacon_node /usr/local/bin/beacon_node
+
+STOPSIGNAL SIGINT
+
+ENTRYPOINT ["/usr/local/bin/beacon_node"]
