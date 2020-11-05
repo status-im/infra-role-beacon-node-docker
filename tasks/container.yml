@@ -22,5 +22,3 @@
       -d
   args:
     chdir: '{{ beacon_node_cont_vol }}'
-  when: cont_restart
-
