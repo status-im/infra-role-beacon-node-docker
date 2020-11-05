@@ -13,7 +13,7 @@
     systemd_timer_start_on_creation: false
     systemd_timer_script_content: |
       #!/usr/bin/env bash
-      # Clear our intermediate image
-      docker image prune -f -a
       # Rebuild and replace the container image
-      docker-compose --compatibility up --quiet-pull --force-recreate --build -d
+      docker-compose --compatibility up \
+        --detach --quiet-pull --force-recreate \
+        --build --build-arg="$(date +%s)"
