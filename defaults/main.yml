@@ -30,10 +30,5 @@ beacon_node_web3_url: 'wss://goerli.infura.io/ws/v3/6224f3c792cc443fafb64e70a98f
 # general container management
 compose_recreate: false
 
-# shared testnet cron job
-beacon_node_timer_rebuild: false
-beacon_node_timer_timeout: 3000
-beacon_node_timer_frequency: 'daily'
-
 # shared testnet name
 beacon_node_shared_testnet: 'medalla'

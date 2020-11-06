@@ -7,22 +7,6 @@
     group: docker
     mode: 0750
 
-- name: Generate the Dockerfile
-  template:
-    src: 'Dockerfile.j2'
-    dest: '{{ beacon_node_cont_vol }}/Dockerfile'
-    owner: dockremap
-    group: docker
-    mode: 0644
-
-- name: Create .dockerignore
-  copy:
-    dest: '{{ beacon_node_cont_vol }}/.dockerignore'
-    content: data/
-    owner: dockremap
-    group: docker
-    mode: 0644
-
 - name: Verify network name
   assert:
     that: '{{ beacon_node_network in ["testnet2", "testnet3"] }}'
@@ -33,12 +17,6 @@
       version: '2.4'
       services:
         beacon_node:
-          build:
-            context: ./
-            dockerfile: Dockerfile
-            args:
-              # This is here just to rebuild every time
-              DUMMY: '{{ ansible_date_time.epoch }}'
           image: '{{ beacon_node_cont_image }}'
           container_name: '{{ beacon_node_cont_name }}'
           restart: 'unless-stopped'
