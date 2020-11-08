@@ -22,6 +22,9 @@
           restart: 'unless-stopped'
           mem_limit: '{{ beacon_node_mem_limit }}M'
           mem_reservation: '{{ beacon_node_mem_reserve }}M'
+          # enable automatic container updates
+          labels:
+            com.centurylinklabs.watchtower.enable: 'true'
           ports:
             - '127.0.0.1:{{ beacon_node_rpc_port }}:{{ beacon_node_rpc_port }}/tcp'
             - '{{ beacon_node_metrics_port }}:{{ beacon_node_metrics_port }}/tcp'
