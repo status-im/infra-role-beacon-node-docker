@@ -9,10 +9,10 @@
         port: '{{ beacon_node_listening_port }}'
         address: '{{ beacon_node_public_address }}'
         tags: ['{{ env }}.{{ stage }}', 'beacon', 'nimbus']
-        #checks:
-        #  - name: 'beacon-node-health'
-        #    type: 'tcp'
-        #    tcp: 'localhost:{{ beacon_node_listening_port }}'
+        checks:
+          - name: 'beacon-node-health'
+            type: 'tcp'
+            tcp: 'localhost:{{ beacon_node_listening_port }}'
 
       - id: '{{ beacon_node_cont_name }}-metrics'
         name: 'beacon-node-metrics'
