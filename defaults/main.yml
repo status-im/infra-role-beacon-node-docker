@@ -1,5 +1,6 @@
 ---
-beacon_node_network: 'testnet0'
+# shared testnet name
+beacon_node_network: 'medalla'
 beacon_node_log_level: INFO
 
 beacon_node_repo_url: 'https://github.com/status-im/nimbus-eth2'
@@ -29,6 +30,3 @@ beacon_node_web3_url: 'wss://goerli.infura.io/ws/v3/6224f3c792cc443fafb64e70a98f
 
 # general container management
 compose_recreate: false
-
-# shared testnet name
-beacon_node_shared_testnet: 'medalla'
