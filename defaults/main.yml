@@ -2,11 +2,10 @@
 # shared testnet name
 beacon_node_network: 'medalla'
 beacon_node_log_level: INFO
+beacon_node_data_folder: 'shared_{{ beacon_node_network }}_0'
 
-beacon_node_repo_url: 'https://github.com/status-im/nimbus-eth2'
-beacon_node_repo_branch: 'devel'
-
-beacon_node_cont_image: 'statusteam/nimbus_beacon_node:{{ beacon_node_repo_branch }}'
+beacon_node_cont_tag: 'devel'
+beacon_node_cont_image: 'statusteam/nimbus_beacon_node:{{ beacon_node_cont_tag }}'
 beacon_node_cont_name: 'beacon-node-{{ beacon_node_network}}'
 beacon_node_cont_vol: '/docker/{{ beacon_node_cont_name }}'
 

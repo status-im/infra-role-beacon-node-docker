@@ -32,7 +32,7 @@
             - '{{ beacon_node_discovery_port }}:{{ beacon_node_discovery_port }}/udp'
           command: >-
             --network={{ beacon_node_network }}
-            --data-dir='/data/shared_{{ beacon_node_network }}_0'
+            --data-dir='/data/{{ beacon_node_data_folder }}'
             --web3-url={{ beacon_node_web3_url }}
             --nat=extip:{{ beacon_node_public_address }}
             --log-level={{ beacon_node_log_level }}
