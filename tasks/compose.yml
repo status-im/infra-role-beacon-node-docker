@@ -38,6 +38,8 @@
             --log-level={{ beacon_node_log_level }}
             --tcp-port={{ beacon_node_listening_port }}
             --udp-port={{ beacon_node_discovery_port }}
+            --netkey-file=/data/netkey
+            --insecure-netkey-password=true
             --rpc
             --rpc-address=0.0.0.0
             --rpc-port={{ beacon_node_rpc_port }}
