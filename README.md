@@ -23,6 +23,8 @@ The crucial settings are:
 beacon_node_network: 'testnet0'
 # optional setting for debug mode
 beacon_node_log_level: DEBUG
+# Infura Web Sockets URL
+beacon_node_web3_url: 'wss://mainnet.infura.io/ws/v3/123qwe123qwe123qwe'
 ```
 
 # Usage

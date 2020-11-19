@@ -1,12 +1,12 @@
 ---
-# shared testnet name
+# shared testnet name: medalla, toledo, pyrmont, etc.
 beacon_node_network: 'medalla'
 beacon_node_log_level: INFO
 beacon_node_data_folder: 'shared_{{ beacon_node_network }}_0'
 
 beacon_node_cont_tag: 'devel'
 beacon_node_cont_image: 'statusteam/nimbus_beacon_node:{{ beacon_node_cont_tag }}'
-beacon_node_cont_name: 'beacon-node-{{ beacon_node_network}}'
+beacon_node_cont_name: 'beacon-node-{{ beacon_node_network }}'
 beacon_node_cont_vol: '/docker/{{ beacon_node_cont_name }}'
 beacon_node_cont_entrypoint: '/usr/local/bin/nimbus_beacon_node'
 
