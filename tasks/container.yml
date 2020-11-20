@@ -6,6 +6,7 @@
     owner: dockremap
     group: docker
     mode: 0644
+  register: beacon_node_compose_file
 
 # This takes a while because it builds the image
 # NOTE: --compatibility flag required for mem/cpu limits
@@ -15,7 +16,7 @@
       --compatibility
       up
       --quiet-pull
-      {% if compose_recreate %}
+      {% if compose_recreate or beacon_node_compose_file.changed %}
       --force-recreate
       {% endif %}
       --no-color
