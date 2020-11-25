@@ -9,7 +9,7 @@
 
 - name: Verify network name
   assert:
-    that: '{{ beacon_node_network in ["medalla", "toledo", "pyrmont"] }}'
+    that: '{{ beacon_node_network in ["toledo", "pyrmont", "mainnet"] }}'
 
 - name: 'Create container config: {{ beacon_node_cont_name }}'
   set_fact:
