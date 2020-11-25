@@ -9,6 +9,7 @@ beacon_node_cont_image: 'statusteam/nimbus_beacon_node:{{ beacon_node_cont_tag }
 beacon_node_cont_name: 'beacon-node-{{ beacon_node_network }}'
 beacon_node_cont_vol: '/docker/{{ beacon_node_cont_name }}'
 beacon_node_cont_entrypoint: '/usr/local/bin/nimbus_beacon_node'
+beacon_node_cont_update_enabled: true
 
 # connectivity settings
 beacon_node_discovery_port: 9000
