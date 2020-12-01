@@ -29,6 +29,10 @@ beacon_node_rpc_port: 9900
 beacon_node_mem_limit: '{{ (ansible_memtotal_mb * 0.5) | int }}'
 beacon_node_mem_reserve: '{{ (ansible_memtotal_mb * 0.4) | int }}'
 
+# Consul service definition settings
+beacon_node_consul_service_name: 'beacon-node'
+beacon_node_consul_metrics_service_name: '{{ beacon_node_consul_service_name }}-metrics'
+
 # Goerli RPC
 beacon_node_web3_url: 'wss://goerli.infura.io/ws/v3/6224f3c792cc443fafb64e70a98f871e'
 
