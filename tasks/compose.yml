@@ -25,6 +25,8 @@
           restart: 'unless-stopped'
           mem_limit: '{{ beacon_node_mem_limit }}M'
           mem_reservation: '{{ beacon_node_mem_reserve }}M'
+          ulimits:
+            core: -1
           # enable automatic container updates
           labels:
             com.centurylinklabs.watchtower.enable: '{{ beacon_node_cont_update_enabled|string }}'
@@ -34,6 +36,7 @@
             - '{{ beacon_node_listening_port }}:{{ beacon_node_listening_port }}/tcp'
             - '{{ beacon_node_discovery_port }}:{{ beacon_node_discovery_port }}/udp'
           entrypoint: '{{ beacon_node_cont_entrypoint }}'
+          working_dir: '/data'
           volumes:
             - '{{ beacon_node_cont_vol }}/data:/data'
             - '{{ beacon_node_secrets_path }}:/data/{{ beacon_node_data_folder }}/secrets:ro'
