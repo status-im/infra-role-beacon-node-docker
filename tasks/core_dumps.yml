@@ -1,0 +1,17 @@
+---
+- name: 'disable Apport'
+  service:
+    name: apport.service
+    state: stopped
+    enabled: false
+
+- name: 'core dump filename pattern'
+  template:
+    src: sysctl_core.conf
+    dest: /etc/sysctl.d/50-core.conf
+
+- name: 'restart systemd-sysctl'
+  service:
+    name: systemd-sysctl.service
+    state: restarted
+
