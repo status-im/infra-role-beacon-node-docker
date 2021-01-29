@@ -36,5 +36,9 @@ beacon_node_consul_metrics_service_name: '{{ beacon_node_consul_service_name }}-
 # Goerli RPC
 beacon_node_web3_url: 'wss://goerli.infura.io/ws/v3/6224f3c792cc443fafb64e70a98f871e'
 
+# Netkey file contents, optional.
+#beacon_node_netkey: '{"key":"json"}'
+beacon_node_netkey_cont_path: 'data/netkey'
+
 # general container management
 compose_recreate: false
