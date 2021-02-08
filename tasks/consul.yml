@@ -2,7 +2,7 @@
 - name: 'Consul service definition - {{ beacon_node_cont_name }}'
   include_role: name=consul-service
   vars:
-    consul_config_name: '{{ beacon_node_cont_name | replace("-", "_") }}'
+    consul_config_name: '{{ beacon_node_consul_service_file_name }}'
     consul_services:
       - id: '{{ beacon_node_cont_name }}'
         name: '{{ beacon_node_consul_service_name }}'
