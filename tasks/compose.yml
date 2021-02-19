@@ -31,6 +31,7 @@
             --tcp-port={{ beacon_node_listening_port }}
             --udp-port={{ beacon_node_discovery_port }}
             --netkey-file=/{{ beacon_node_netkey_cont_path }}
+            --slashing-db-kind={{ beacon_node_slashing_db_kind }}
             --insecure-netkey-password=true
             --rpc
             --rpc-address=0.0.0.0
