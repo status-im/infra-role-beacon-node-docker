@@ -1,12 +1,11 @@
 ---
 - name: 'Create compose file: {{ beacon_node_cont_name }}'
-  copy:
+  template:
+    src: 'docker-compose.yml.j2'
     dest: '{{ beacon_node_cont_vol }}/docker-compose.yml'
-    content: '{{ beacon_node_compose | to_nice_yaml }}'
     owner: dockremap
     group: docker
     mode: 0644
-  register: beacon_node_compose_file
 
 - name: 'Create container: {{ beacon_node_cont_name }}'
   docker_compose:

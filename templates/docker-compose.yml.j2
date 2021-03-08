@@ -1,0 +1,38 @@
+---
+version: '2.4'
+services:
+  beacon_node:
+    image: '{{ beacon_node_cont_image }}'
+    container_name: '{{ beacon_node_cont_name }}'
+    restart: 'unless-stopped'
+    mem_limit: '{{ beacon_node_mem_limit }}M'
+    mem_reservation: '{{ beacon_node_mem_reserve }}M'
+    entrypoint: '/usr/local/bin/nimbus_beacon_node'
+    # enable automatic container updates
+    labels:
+      com.centurylinklabs.watchtower.enable: '{{ beacon_node_cont_update_enabled|string }}'
+    ports:
+      - '127.0.0.1:{{ beacon_node_rpc_port }}:{{ beacon_node_rpc_port }}/tcp' # RPC
+      - '{{ beacon_node_metrics_port }}:{{ beacon_node_metrics_port }}/tcp' # Metrics
+      - '{{ beacon_node_listening_port }}:{{ beacon_node_listening_port }}/tcp' # LibP2P
+      - '{{ beacon_node_discovery_port }}:{{ beacon_node_discovery_port }}/udp' # Discovery
+    volumes:
+      - '{{ beacon_node_cont_vol }}/data:/data'
+      - '{{ beacon_node_secrets_path }}:/data/{{ beacon_node_data_folder }}/secrets:ro'
+    command: |
+      --network={{ beacon_node_network }}
+      --data-dir='/data/{{ beacon_node_data_folder }}'
+      --web3-url={{ beacon_node_web3_url | mandatory }}
+      --nat=extip:{{ beacon_node_public_address }}
+      --log-level={{ beacon_node_log_level }}
+      --tcp-port={{ beacon_node_listening_port }}
+      --udp-port={{ beacon_node_discovery_port }}
+      --netkey-file=/{{ beacon_node_netkey_cont_path }}
+      --slashing-db-kind={{ beacon_node_slashing_db_kind }}
+      --insecure-netkey-password=true
+      --rpc
+      --rpc-address=0.0.0.0
+      --rpc-port={{ beacon_node_rpc_port }}
+      --metrics
+      --metrics-address=0.0.0.0
+      --metrics-port={{ beacon_node_metrics_port }}
