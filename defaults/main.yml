@@ -18,6 +18,7 @@ beacon_node_secrets_path: '{{ beacon_node_cont_vol }}/data/{{ beacon_node_data_f
 beacon_node_discovery_port: 9000
 beacon_node_listening_port: 9000
 beacon_node_public_address: '{{ ansible_host }}'
+beacon_node_max_peers: 160
 
 # metrics
 beacon_node_metrics_port: 9200
