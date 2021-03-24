@@ -9,12 +9,13 @@
         port: '{{ beacon_node_listening_port }}'
         address: '{{ beacon_node_public_address }}'
         tags: ['{{ env }}.{{ stage }}', 'beacon', 'nimbus']
-        checks:
-          - name: '{{ beacon_node_consul_service_name }}-health'
-            type: 'script'
-            script: '{{ beacon_node_cont_vol }}/rpc.sh get_v1_node_version'
-            interval: '60s'
-            timeout: '10s'
+        # Nimbus runs on one thread and RPC calls regularly time out.
+        #checks:
+        #  - name: '{{ beacon_node_consul_service_name }}-health'
+        #    type: 'script'
+        #    script: '{{ beacon_node_cont_vol }}/rpc.sh get_v1_node_version'
+        #    interval: '60s'
+        #    timeout: '10s'
 
       - id: '{{ beacon_node_cont_name }}-metrics'
         name: '{{ beacon_node_consul_metrics_service_name }}'
