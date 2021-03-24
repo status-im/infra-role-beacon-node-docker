@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # vim: set ft=sh:
+set -euo pipefail
 
 URL="http://localhost:{{ beacon_node_rpc_port }}/"
 
@@ -30,4 +31,4 @@ curl -s -X POST \
     -H "Content-type:application/json" \
     --data "${PAYLOAD}" \
     "${URL}" | \
-     jq -e '., if .error != null then null|halt_error(1) else halt end'
+     jq -e '., if .error != null then null|halt_error(2) else halt end'
