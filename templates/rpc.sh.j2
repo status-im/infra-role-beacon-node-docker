@@ -6,28 +6,27 @@ URL="http://localhost:{{ beacon_node_rpc_port }}/"
 
 METHOD="$1"
 shift
-PARAMS=("$@")
 
 if [[ -z "${METHOD}" ]]; then
     echo "No method specified!" >&2
     exit 1
 fi
-if [[ -n "${PARAMS}" ]]; then
-    PARAMS_STR=$(printf '%s\",\"' "${PARAMS[@]}")
-    PARAMS_STR="\"${PARAMS_STR%%\",\"}\""
+if [[ -n "${@}" ]]; then
+    PARAMS=$(printf '%s\",\"' "${@}")
+    PARAMS="\"${PARAMS_STR%%\",\"}\""
 else
-    PARAMS_STR=''
+    PARAMS=''
 fi
 
 PAYLOAD="{
   \"id\": 1,
   \"jsonrpc\": \"2.0\",
   \"method\": \"${METHOD}\",
-  \"params\": [${PARAMS_STR}]
+  \"params\": [${PARAMS}]
 }"
 
 # The jq script checks if error exists and adjusts exit code.
-curl -s -X POST \
+curl -s -X POST --max-time 10 \
     -H "Content-type:application/json" \
     --data "${PAYLOAD}" \
     "${URL}" | \

@@ -13,6 +13,8 @@
           - name: '{{ beacon_node_consul_service_name }}-health'
             type: 'script'
             script: '{{ beacon_node_cont_vol }}/rpc.sh get_v1_node_version'
+            interval: '60s'
+            timeout: '10s'
 
       - id: '{{ beacon_node_cont_name }}-metrics'
         name: '{{ beacon_node_consul_metrics_service_name }}'
