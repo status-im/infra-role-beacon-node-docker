@@ -10,7 +10,7 @@
     - '{{ beacon_node_cont_vol }}/data'
     - '{{ beacon_node_secrets_path }}'
 
-- name: 'Create netkey file (optional)'
+- name: Create netkey file (optional)
   copy:
     dest: '{{ beacon_node_cont_vol  }}/{{ beacon_node_netkey_cont_path }}'
     content: '{{ beacon_node_netkey }}'
@@ -19,7 +19,14 @@
     mode: 0600
   when: beacon_node_netkey is defined
 
+- name: Create JSON RPC wrapper script
+  template:
+    src: 'rpc.sh.j2'
+    dest: '{{ beacon_node_cont_vol }}/rpc.sh'
+    owner: 'root'
+    group: 'docker'
+    mode: 0750
+
 - name: Verify network name
   assert:
     that: '{{ beacon_node_network in ["toledo", "pyrmont", "prater", "mainnet"] }}'
-

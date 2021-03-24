@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# vim: set ft=sh:
+
+URL="http://localhost:{{ beacon_node_rpc_port }}/"
+
+METHOD="$1"
+shift
+PARAMS=("$@")
+
+if [[ -z "${METHOD}" ]]; then
+    echo "No method specified!" >&2
+    exit 1
+fi
+if [[ -n "${PARAMS}" ]]; then
+    PARAMS_STR=$(printf '%s\",\"' "${PARAMS[@]}")
+    PARAMS_STR="\"${PARAMS_STR%%\",\"}\""
+else
+    PARAMS_STR=''
+fi
+
+PAYLOAD="{
+  \"id\": 1,
+  \"jsonrpc\": \"2.0\",
+  \"method\": \"${METHOD}\",
+  \"params\": [${PARAMS_STR}]
+}"
+
+curl -s -X POST \
+    -H "Content-type:application/json" \
+    --data "${PAYLOAD}" \
+    "${URL}" | jq .
