@@ -34,6 +34,7 @@ services:
       --slashing-db-kind={{ beacon_node_slashing_db_kind }}
       --insecure-netkey-password=true
       --subscribe-all-subnets={{ beacon_node_subscribe_all | to_json }}
+      --doppelganger-detection={{ beacon_node_doppelganger_detection | to_json }}
       --rpc
       --rpc-address=0.0.0.0
       --rpc-port={{ beacon_node_rpc_port }}
