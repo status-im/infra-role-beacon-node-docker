@@ -29,4 +29,4 @@
 
 - name: Verify network name
   assert:
-    that: '{{ beacon_node_network in ["toledo", "pyrmont", "prater", "mainnet"] }}'
+    that: '{{ beacon_node_network in ["toledo", "pyrmont", "prater", "mainnet", "steklo"] }}'
