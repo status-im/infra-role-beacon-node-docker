@@ -7,8 +7,17 @@
     group: docker
     mode: 0644
 
+# Take into account additional docker-compose.yml files.
+- name: Find all Docker Compose files
+  find:
+    paths: '{{ beacon_node_cont_vol }}'
+    patterns: 'docker-compose*.yml'
+    recurse: false
+  register: all_compose_files
+
 - name: 'Create container: {{ beacon_node_cont_name }}'
   docker_compose:
     project_src: '{{ beacon_node_cont_vol }}'
+    files: '{{ all_compose_files.files | map(attribute="path") | list }}'
     recreate: '{{ compose_recreate | ternary("always", "smart") }}'
     pull: true
