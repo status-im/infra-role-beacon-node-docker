@@ -26,7 +26,3 @@
     owner: 'root'
     group: 'docker'
     mode: 0750
-
-- name: Verify network name
-  assert:
-    that: '{{ beacon_node_network in ["toledo", "pyrmont", "prater", "mainnet", "steklo"] }}'
