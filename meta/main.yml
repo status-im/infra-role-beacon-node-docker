@@ -13,3 +13,6 @@ galaxy_info:
     - name: consul-service
       src: git+git@github.com:status-im/infra-role-consul-service.git
       scm: git
+    - name: infra-role-dist-validators
+      src: git+git@github.com:status-im/infra-role-dist-validators.git
+      scm: git
