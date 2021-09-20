@@ -26,17 +26,29 @@ beacon_node_dist_validators_data_path: '{{ beacon_node_cont_vol }}/data/{{ beaco
 #beacon_node_dist_validators_start: ~
 #beacon_node_dist_validators_end: ~
 
-# connectivity settings
+# Connectivity settings
 beacon_node_discovery_port: 9000
 beacon_node_listening_port: 9000
 beacon_node_public_address: '{{ ansible_host }}'
 beacon_node_max_peers: 160
 
-# metrics
+# Number of hardware threads to use
+beacon_node_threads: 1
+
+# Scraping of metrics done via VPN. Protected by firewall.
+beacon_node_metrics_enabled: true
+beacon_node_metrics_address: '0.0.0.0'
 beacon_node_metrics_port: 9200
 
-# rpc / administrative
+# The JSON-RPC service is disabled because this is a legacy
+# functionality that will be removed from Nimbus eventually
+beacon_node_rpc_enabled: false
+beacon_node_rpc_address: '127.0.0.1'
 beacon_node_rpc_port: 9900
+
+beacon_node_rest_enabled: true
+beacon_node_rest_address: '127.0.0.1'
+beacon_node_rest_port: 5052
 
 # resource limits, mem in MB
 beacon_node_mem_limit: '{{ (ansible_memtotal_mb * 0.5) | int }}'
