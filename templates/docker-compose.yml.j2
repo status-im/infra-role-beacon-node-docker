@@ -13,7 +13,10 @@ services:
       com.centurylinklabs.watchtower.enable: '{{ beacon_node_cont_update_enabled|string }}'
     ports:
 {% if beacon_node_rpc_enabled %}
-      - '127.0.0.1:{{ beacon_node_rpc_port }}:{{ beacon_node_rpc_port }}/tcp' # RPC
+      - '{{ beacon_node_rpc_address }}:{{ beacon_node_rpc_port }}:{{ beacon_node_rpc_port }}/tcp' # RPC
+{% endif %}
+{% if beacon_node_rest_enabled %}
+      - '{{ beacon_node_rest_address }}:{{ beacon_node_rest_port }}:{{ beacon_node_rest_port }}/tcp' # RPC
 {% endif %}
 {% if beacon_node_metrics_enabled %}
       - '{{ beacon_node_metrics_port }}:{{ beacon_node_metrics_port }}/tcp' # Metrics
@@ -40,18 +43,19 @@ services:
       --insecure-netkey-password=true
       --subscribe-all-subnets={{ beacon_node_subscribe_all | to_json }}
       --doppelganger-detection={{ beacon_node_doppelganger_detection | to_json }}
+      --rpc={{ beacon_node_rpc_enabled | to_json }}
 {% if beacon_node_rpc_enabled %}
-      --rpc-address={{ beacon_node_rpc_address }}
+      --rpc-address=0.0.0.0
       --rpc-port={{ beacon_node_rpc_port }}
 {% endif %}
       --rest={{ beacon_node_rest_enabled | to_json }}
 {% if beacon_node_rest_enabled %}
-      --rest-address={{ beacon_node_rest_address }}
+      --rest-address=0.0.0.0
       --rest-port={{ beacon_node_rest_port }}
 {% endif %}
       --metrics={{ beacon_node_metrics_enabled | to_json }}
 {% if beacon_node_metrics_enabled %}
-      --metrics-address={{ beacon_node_metrics_address }}
+      --metrics-address=0.0.0.0
       --metrics-port={{ beacon_node_metrics_port }}
 {% endif %}
 
