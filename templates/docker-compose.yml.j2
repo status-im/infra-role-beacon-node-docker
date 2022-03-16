@@ -58,4 +58,6 @@ services:
       --metrics-address=0.0.0.0
       --metrics-port={{ beacon_node_metrics_port }}
 {% endif %}
+      --serve-light-client-data={{ beacon_node_serve_light_client_data | to_json }}
+      --import-light-client-data={{ beacon_node_import_light_client_data }}
 
